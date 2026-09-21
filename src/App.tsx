@@ -542,14 +542,19 @@ export default function App() {
               handleReset();
               setAppMode(null);
             }} 
-            className="flex items-center gap-3 group hover:opacity-80 transition-all duration-300"
+            className="flex items-center group hover:opacity-90 transition-all duration-300 cursor-pointer"
+            title="UPDF"
           >
-            <div className="w-9 h-9 bg-gradient-to-br from-indigo-600 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-200 dark:shadow-indigo-900/50 group-hover:scale-105 transition-transform">
-              <span className="text-sm tracking-tighter">U</span>
-            </div>
-            <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300">
-              {t.brand}
-            </h1>
+            <img 
+              src="/logo-light.png" 
+              alt="UPDF" 
+              className="h-9 sm:h-10 w-auto object-contain dark:hidden group-hover:scale-105 transition-transform duration-200" 
+            />
+            <img 
+              src="/logo-dark.png" 
+              alt="UPDF" 
+              className="h-9 sm:h-10 w-auto object-contain hidden dark:block group-hover:scale-105 transition-transform duration-200" 
+            />
           </button>
           
           <div className="flex items-center gap-3">
