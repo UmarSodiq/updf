@@ -1,8 +1,6 @@
 {
   "name": "U PDF",
-  "description": "A web application to convert PDF files into JPG/PNG/WEBP images, and compress PDF sizes.",
+  "description": "A web application to convert PDF files into JPG/PNG/WEBP images, compress PDF sizes, and manipulate documents.",
   "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "majorCapabilities": []
 }

@@ -360,10 +360,14 @@ export default function App() {
     }
   };
 
+  const sanitizeFilename = (name: string): string => {
+    return name.replace(/[\x00-\x1f\x80-\x9f\\/:*?"<>|]+/g, '_').trim();
+  };
+
   const handleDownloadPdf = () => {
     if (!resultPdfBlob) return;
     const defaultName = file ? file.name.replace(/\.(pdf|docx?)$/i, '') : (appMode === 'img2pdf' ? 'images' : 'merged-document');
-    let finalName = outputFilename.trim();
+    let finalName = sanitizeFilename(outputFilename.trim());
     if (!finalName) {
       finalName = `${defaultName}-${appMode}.pdf`;
     } else if (!finalName.toLowerCase().endsWith('.pdf')) {
