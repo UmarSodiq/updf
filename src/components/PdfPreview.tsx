@@ -75,16 +75,16 @@ export function PdfPreview({ file, files, className = "", defaultExpanded = true
   if (!currentFile) return null;
 
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden ${className}`}>
+    <div className={`bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden ${className}`}>
       <div 
-        className="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between cursor-pointer hover:bg-slate-100 transition-colors"
+        className="px-4 py-3 bg-slate-50 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-2">
-          <Maximize2 className={`w-4 h-4 text-slate-500 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-          <h3 className="font-medium text-slate-800">Preview Dokumen</h3>
+          <Maximize2 className={`w-4 h-4 text-slate-500 dark:text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+          <h3 className="font-medium text-slate-800 dark:text-slate-200">Preview Dokumen</h3>
         </div>
-        <span className="text-sm text-slate-500 truncate max-w-[200px] sm:max-w-[400px]">
+        <span className="text-sm text-slate-500 dark:text-slate-400 truncate max-w-[200px] sm:max-w-[400px]">
           {targetFiles.length > 1 ? `(${currentFileIndex + 1}/${targetFiles.length}) ${currentFile.name}` : currentFile.name}
         </span>
       </div>
@@ -97,80 +97,80 @@ export function PdfPreview({ file, files, className = "", defaultExpanded = true
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="p-4 bg-slate-100/50 flex flex-col items-center">
+            <div className="p-4 bg-slate-100/50 dark:bg-slate-950/40 flex flex-col items-center">
               {/* Controls */}
               <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
                 {targetFiles.length > 1 && (
-                  <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200">
+                  <div className="flex items-center gap-2 bg-white dark:bg-slate-800 px-4 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700">
                     <button
                       onClick={() => changeFile(-1)}
                       disabled={currentFileIndex <= 0}
-                      className="p-1 hover:bg-slate-100 rounded-full disabled:opacity-50 transition-colors"
+                      className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full disabled:opacity-50 transition-colors"
                       title="File Sebelumnya"
                     >
-                      <ChevronLeft className="w-5 h-5 text-slate-700" />
+                      <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                     </button>
-                    <div className="text-sm font-medium text-slate-700 font-mono w-16 text-center truncate">
+                    <div className="text-sm font-medium text-slate-700 dark:text-slate-300 font-mono w-16 text-center truncate">
                       File
                     </div>
                     <button
                       onClick={() => changeFile(1)}
                       disabled={currentFileIndex >= targetFiles.length - 1}
-                      className="p-1 hover:bg-slate-100 rounded-full disabled:opacity-50 transition-colors"
+                      className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full disabled:opacity-50 transition-colors"
                       title="File Selanjutnya"
                     >
-                      <ChevronRight className="w-5 h-5 text-slate-700" />
+                      <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                     </button>
                   </div>
                 )}
                 
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200">
+                <div className="flex items-center gap-2 bg-white dark:bg-slate-800 px-4 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700">
                   <button
                     onClick={() => changePage(-1)}
                     disabled={pageNumber <= 1}
-                    className="p-1 hover:bg-slate-100 rounded-full disabled:opacity-50 transition-colors"
+                    className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full disabled:opacity-50 transition-colors"
                     title="Halaman Sebelumnya"
                   >
-                    <ChevronLeft className="w-5 h-5 text-slate-700" />
+                    <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                   </button>
-                  <div className="text-sm font-medium text-slate-700 font-mono w-24 text-center">
+                  <div className="text-sm font-medium text-slate-700 dark:text-slate-300 font-mono w-24 text-center">
                     Hal {pageNumber} / {numPages || '--'}
                   </div>
                   <button
                     onClick={() => changePage(1)}
                     disabled={pageNumber >= (numPages || 1)}
-                    className="p-1 hover:bg-slate-100 rounded-full disabled:opacity-50 transition-colors"
+                    className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full disabled:opacity-50 transition-colors"
                     title="Halaman Selanjutnya"
                   >
-                    <ChevronRight className="w-5 h-5 text-slate-700" />
+                    <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                   </button>
   
-                  <div className="w-px h-6 bg-slate-200 mx-2" />
+                  <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2" />
   
                   <button
                     onClick={() => changeScale(-0.25)}
                     disabled={scale <= 0.5}
-                    className="p-1 hover:bg-slate-100 rounded-full disabled:opacity-50 transition-colors"
+                    className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full disabled:opacity-50 transition-colors"
                     title="Perkecil"
                   >
-                    <ZoomOut className="w-5 h-5 text-slate-700" />
+                    <ZoomOut className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                   </button>
-                  <div className="text-sm font-medium text-slate-700 font-mono w-16 text-center">
+                  <div className="text-sm font-medium text-slate-700 dark:text-slate-300 font-mono w-16 text-center">
                     {Math.round(scale * 100)}%
                   </div>
                   <button
                     onClick={() => changeScale(0.25)}
                     disabled={scale >= 3.0}
-                    className="p-1 hover:bg-slate-100 rounded-full disabled:opacity-50 transition-colors"
+                    className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full disabled:opacity-50 transition-colors"
                     title="Perbesar"
                   >
-                    <ZoomIn className="w-5 h-5 text-slate-700" />
+                    <ZoomIn className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                   </button>
                 </div>
               </div>
 
               {/* Document Render */}
-              <div className="w-full overflow-auto flex justify-center bg-slate-200/50 rounded-xl border border-slate-200 p-2 sm:p-4 min-h-[300px]">
+              <div className="w-full overflow-auto flex justify-center bg-slate-200/50 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 p-2 sm:p-4 min-h-[300px]">
                 {fileUrl && (
                   <Document
                     file={fileUrl}
@@ -194,7 +194,7 @@ export function PdfPreview({ file, files, className = "", defaultExpanded = true
                       scale={scale} 
                       renderTextLayer={true}
                       renderAnnotationLayer={true}
-                      className="shadow-lg border border-slate-200 bg-white"
+                      className="shadow-lg border border-slate-200 dark:border-slate-700 bg-white"
                     />
                   </Document>
                 )}

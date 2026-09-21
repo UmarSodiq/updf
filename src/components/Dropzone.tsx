@@ -86,8 +86,8 @@ export const Dropzone: React.FC<DropzoneProps> = ({
       onDrop={handleDrop}
       className={`relative w-full overflow-hidden flex flex-col items-center justify-center p-8 sm:p-14 mt-6 sm:mt-8 border-2 border-dashed rounded-[2rem] transition-all duration-300 ${
         isDragActive
-          ? 'border-indigo-400 bg-indigo-50/70 backdrop-blur-xl scale-[1.02] shadow-xl shadow-indigo-100/50'
-          : 'border-slate-200 hover:border-indigo-300 bg-white/70 hover:bg-white/90 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]'
+          ? 'border-indigo-400 bg-indigo-50/70 dark:bg-indigo-950/40 backdrop-blur-xl scale-[1.02] shadow-xl shadow-indigo-100/50 dark:shadow-indigo-900/30'
+          : 'border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-500 bg-white/70 hover:bg-white/90 dark:bg-slate-900/60 dark:hover:bg-slate-900/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]'
       } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
     >
       <input
@@ -109,17 +109,17 @@ export const Dropzone: React.FC<DropzoneProps> = ({
 
       <motion.div 
         animate={{ y: isDragActive ? -10 : 0, scale: isDragActive ? 1.05 : 1 }}
-        className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-blue-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-200/50 relative transform rotate-3"
+        className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-blue-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-200/50 dark:shadow-indigo-900/50 relative transform rotate-3"
       >
-        <UploadCloud className={`w-8 h-8 text-white`} strokeWidth={1.5} />
-        <div className="absolute -bottom-2 -right-2 bg-white rounded-lg p-1.5 shadow-md border border-slate-100 transform -rotate-3">
-           <FileType className="w-4 h-4 text-indigo-600" />
+        <UploadCloud className="w-8 h-8 text-white" strokeWidth={1.5} />
+        <div className="absolute -bottom-2 -right-2 bg-white dark:bg-slate-800 rounded-lg p-1.5 shadow-md border border-slate-100 dark:border-slate-700 transform -rotate-3">
+           <FileType className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
         </div>
       </motion.div>
-      <h3 className="text-xl font-bold text-slate-900 mb-3 z-10">
+      <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3 z-10">
         {isDragActive ? dropText : title}
       </h3>
-      <p className="text-slate-500 text-sm max-w-sm text-center z-10 font-medium">
+      <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm text-center z-10 font-medium">
         {description}
       </p>
     </div>
