@@ -1,4 +1,10 @@
 import * as pdfjsLib from 'pdfjs-dist';
+// @ts-ignore
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+}
 import { ConvertedImage, ProcessingState, ConversionOptions, CompressionOptions, SplitOptions, RotateOptions, RemovePagesOptions } from '@/types';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';

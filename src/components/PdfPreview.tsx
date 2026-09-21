@@ -30,17 +30,6 @@ export function PdfPreview({ file, files, className = "", defaultExpanded = true
   }, [files, file]);
 
   const currentFile = targetFiles[currentFileIndex];
-  
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
-  useEffect(() => {
-    if (currentFile) {
-      const url = URL.createObjectURL(currentFile);
-      setFileUrl(url);
-      return () => URL.revokeObjectURL(url);
-    } else {
-      setFileUrl(null);
-    }
-  }, [currentFile]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -171,10 +160,11 @@ export function PdfPreview({ file, files, className = "", defaultExpanded = true
 
               {/* Document Render */}
               <div className="w-full overflow-auto flex justify-center bg-slate-200/50 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 p-2 sm:p-4 min-h-[300px]">
-                {fileUrl && (
+                {currentFile && (
                   <Document
-                    file={fileUrl}
+                    file={currentFile}
                     onLoadSuccess={onDocumentLoadSuccess}
+                    onLoadError={(err) => console.error("PDF Preview load error:", err)}
                     onItemClick={({ pageNumber }) => {
                       if (pageNumber) setPageNumber(pageNumber);
                     }}

@@ -31,7 +31,7 @@
     "motion": "^12.23.24",
     "pdf-lib": "^1.17.1",
     "pdf-merger-js": "^5.1.2",
-    "pdfjs-dist": "^6.3.289",
+    "pdfjs-dist": "5.4.296",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
     "react-markdown": "^10.1.0",
