@@ -13,6 +13,7 @@ export const translations = {
     heroTitle: 'Semua alat PDF yang Anda butuhkan.',
     heroSubtitle: 'Koleksi alat PDF kami yang kuat dirancang untuk memproses dokumen digital dan merampingkan alur kerja Anda, sepenuhnya aman di dalam browser Anda.',
     moreTools: 'Jelajahi alat PDF lainnya',
+    backToHome: 'Kembali ke Beranda',
     
     categories: {
       format: 'Konversi Format',
@@ -36,6 +37,14 @@ export const translations = {
         subtitle: 'Ubah beberapa gambar menjadi satu dokumen PDF. Semuanya diproses dengan aman di browser Anda.',
         dropTitle: 'Pilih atau letakkan gambar Anda',
         dropDesc: 'Unggah beberapa gambar untuk menggabungkannya menjadi dokumen PDF tunggal.',
+        panelTitle: 'Pengaturan Gambar ke PDF',
+        panelDesc: 'Seret dan lepas untuk mengatur ulang urutan gambar sesuai keinginan. Setiap gambar akan ditempatkan di halamannya sendiri.',
+        selectedImages: 'gambar dipilih',
+        addImage: 'Tambah Gambar',
+        addMore: 'Tambah Gambar',
+        dropOrClick: 'atau seret gambar ke sini',
+        totalSize: 'total',
+        btnConvert: 'Buat PDF dari {count} Gambar',
       },
       merge: {
         name: 'Gabung PDF',
@@ -44,6 +53,14 @@ export const translations = {
         subtitle: 'Gabungkan beberapa file PDF menjadi satu dokumen dengan mudah dan aman.',
         dropTitle: 'Pilih atau letakkan PDF Anda',
         dropDesc: 'Unggah beberapa dokumen PDF untuk menggabungkannya menjadi sebuah file tunggal.',
+        panelTitle: 'Pengaturan Gabung PDF',
+        panelDesc: 'Seret dan lepas untuk mengatur ulang urutan file. File teratas akan menjadi halaman pertama dalam dokumen yang digabungkan.',
+        selectedFiles: 'dokumen PDF dipilih',
+        addFile: 'Tambah File PDF',
+        addMore: 'Tambah File',
+        dropOrClick: 'atau seret file PDF ke sini',
+        totalSize: 'total',
+        btnMerge: 'Gabungkan {count} File PDF',
       },
       split: {
         name: 'Pisah PDF',
@@ -164,6 +181,8 @@ export const translations = {
       unlockDone: 'PDF Dibuka',
       genericDone: 'PDF Berhasil Diproses',
       downloadBatch: 'Unduh ZIP ({count} File)',
+      processAnother: 'Proses Dokumen Lain',
+      downloadSuccess: 'Berhasil Diunduh!',
     },
 
     common: {
@@ -186,6 +205,7 @@ export const translations = {
     heroTitle: 'All the PDF tools you need.',
     heroSubtitle: 'Our powerful suite of PDF tools is designed to process digital documents and streamline your workflow, completely secure inside your browser.',
     moreTools: 'Explore more PDF tools',
+    backToHome: 'Back to Home',
 
     categories: {
       format: 'Format Conversion',
@@ -209,6 +229,14 @@ export const translations = {
         subtitle: 'Convert multiple images into one PDF document. Completely processed securely in your browser.',
         dropTitle: 'Choose or drop your images',
         dropDesc: 'Upload multiple images to combine them into a single PDF document.',
+        panelTitle: 'Images to PDF Settings',
+        panelDesc: 'Drag and drop to reorder images as you wish. Each image will be placed on its own page.',
+        selectedImages: 'images selected',
+        addImage: 'Add Images',
+        addMore: 'Add Images',
+        dropOrClick: 'or drop images here',
+        totalSize: 'total',
+        btnConvert: 'Create PDF from {count} Images',
       },
       merge: {
         name: 'Merge PDF',
@@ -217,6 +245,14 @@ export const translations = {
         subtitle: 'Combine several PDF files into one clean document easily and securely.',
         dropTitle: 'Choose or drop your PDFs',
         dropDesc: 'Upload multiple PDF files to merge them into a single file.',
+        panelTitle: 'Merge PDF Settings',
+        panelDesc: 'Drag and drop to reorder files. The top file will be the first page in the merged document.',
+        selectedFiles: 'PDF documents selected',
+        addFile: 'Add PDF Files',
+        addMore: 'Add Files',
+        dropOrClick: 'or drop PDF files here',
+        totalSize: 'total',
+        btnMerge: 'Merge {count} PDF Files',
       },
       split: {
         name: 'Split PDF',
@@ -337,6 +373,8 @@ export const translations = {
       unlockDone: 'PDF Unlocked',
       genericDone: 'PDF Successfully Processed',
       downloadBatch: 'Download ZIP ({count} Files)',
+      processAnother: 'Process Another Document',
+      downloadSuccess: 'Downloaded Successfully!',
     },
 
     common: {

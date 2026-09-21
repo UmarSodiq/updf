@@ -25,6 +25,9 @@ import {
   RefreshCw, 
   Loader2, 
   ArrowRight, 
+  ArrowLeft,
+  Check,
+  RotateCcw,
   Minimize2, 
   Image as ImageIcon, 
   CopyPlus, 
@@ -121,6 +124,7 @@ export default function App() {
   const [state, setState] = useState<ProcessingState>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [outputFilename, setOutputFilename] = useState<string>('');
+  const [downloaded, setDownloaded] = useState<boolean>(false);
 
   const handleFileSelect = useCallback((selectedFiles: File[]) => {
     const batchSupportedModes = ['merge', 'img2pdf', 'compress', 'remove', 'protect', 'unlock'];
@@ -423,6 +427,8 @@ export default function App() {
         setProgress(p);
         setState(s);
       });
+      setDownloaded(true);
+      setTimeout(() => setDownloaded(false), 2500);
     } catch (err) {
       console.error('Failed to create zip', err);
     }
@@ -435,6 +441,8 @@ export default function App() {
         setProgress(p);
         setState(s);
       });
+      setDownloaded(true);
+      setTimeout(() => setDownloaded(false), 2500);
     } catch (err) {
       console.error('Failed to create zip', err);
     }
@@ -454,6 +462,8 @@ export default function App() {
       finalName += '.pdf';
     }
     saveAs(resultPdfBlob, finalName);
+    setDownloaded(true);
+    setTimeout(() => setDownloaded(false), 2500);
   };
 
   const handleReset = () => {
@@ -465,6 +475,7 @@ export default function App() {
     setState('idle');
     setErrorMsg(null);
     setOutputFilename('');
+    setDownloaded(false);
   };
 
   const isProcessing = state !== 'idle' && state !== 'error' && state !== 'configuring';
@@ -634,6 +645,32 @@ export default function App() {
       )}
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Navigation Bar when tool is active */}
+        {appMode && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-2xl mx-auto mb-6 flex items-center justify-between"
+          >
+            <button
+              type="button"
+              onClick={() => {
+                handleReset();
+                setAppMode(null);
+              }}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span>{t.backToHome}</span>
+            </button>
+
+            <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 rounded-full border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span>{t.tools[appMode]?.name}</span>
+            </div>
+          </motion.div>
+        )}
+
         {/* Welcome & Tool Selection Area */}
         <AnimatePresence mode="wait">
           {appMode && (!file && files.length === 0) && (
@@ -643,7 +680,7 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.4 }}
-              className="max-w-2xl mx-auto mt-6"
+              className="max-w-2xl mx-auto mt-2"
             >
               <div className="text-center mb-10">
                 <div className="inline-flex items-center justify-center p-3 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-2xl mb-6 shadow-sm border border-indigo-100 dark:border-indigo-900/60">
@@ -713,6 +750,7 @@ export default function App() {
               onStart={startMerge} 
               onCancel={handleReset} 
               onFilesUpdate={setFiles}
+              lang={lang}
             />
           )}
 
@@ -741,6 +779,7 @@ export default function App() {
               onStart={startImageToPdf} 
               onCancel={handleReset} 
               onFilesUpdate={setFiles}
+              lang={lang}
             />
           )}
 
@@ -876,13 +915,36 @@ export default function App() {
                   </p>
                 </div>
                 
-                <button
-                  onClick={handleDownloadAll}
-                  className="mt-4 sm:mt-0 px-6 py-4 bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 text-white font-bold rounded-xl flex items-center gap-2 transition-all active:scale-95 shadow-lg"
-                >
-                  <FileDown className="w-5 h-5" />
-                  {t.results.downloadZip}
-                </button>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="px-4 py-4 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-semibold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 cursor-pointer text-sm"
+                  >
+                    <RotateCcw className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                    <span>{t.results.processAnother}</span>
+                  </button>
+                  <button
+                    onClick={handleDownloadAll}
+                    className={`mt-4 sm:mt-0 px-6 py-4 font-bold rounded-xl flex items-center gap-2 transition-all duration-200 active:scale-95 shadow-lg cursor-pointer ${
+                      downloaded
+                        ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20'
+                        : 'bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 text-white'
+                    }`}
+                  >
+                    {downloaded ? (
+                      <>
+                        <Check className="w-5 h-5 text-white animate-bounce" />
+                        <span>{t.results.downloadSuccess}</span>
+                      </>
+                    ) : (
+                      <>
+                        <FileDown className="w-5 h-5" />
+                        <span>{t.results.downloadZip}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
@@ -955,11 +1017,46 @@ export default function App() {
                   ))}
                   <button
                     onClick={handleDownloadBatchPdf}
-                    className="w-full mt-4 py-4 bg-blue-600 dark:bg-indigo-600 hover:bg-blue-700 dark:hover:bg-indigo-500 text-white font-bold rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-sm"
+                    className={`w-full mt-4 py-4 font-bold rounded-2xl flex items-center justify-center gap-3 transition-all duration-200 active:scale-95 shadow-sm cursor-pointer ${
+                      downloaded
+                        ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20'
+                        : 'bg-blue-600 dark:bg-indigo-600 hover:bg-blue-700 dark:hover:bg-indigo-500 text-white'
+                    }`}
                   >
-                    <FileDown className="w-6 h-6" />
-                    {t.results.downloadBatch.replace('{count}', String(batchResultsPdf.length))}
+                    {downloaded ? (
+                      <>
+                        <Check className="w-6 h-6 text-white animate-bounce" />
+                        <span>{t.results.downloadSuccess}</span>
+                      </>
+                    ) : (
+                      <>
+                        <FileDown className="w-6 h-6" />
+                        <span>{t.results.downloadBatch.replace('{count}', String(batchResultsPdf.length))}</span>
+                      </>
+                    )}
                   </button>
+
+                  <div className="mt-4 pt-4 border-t border-slate-200/60 dark:border-slate-800 flex flex-col sm:flex-row gap-3">
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="flex-1 py-3.5 px-4 text-slate-700 dark:text-slate-200 font-semibold rounded-2xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 cursor-pointer text-sm"
+                    >
+                      <RotateCcw className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                      <span>{t.results.processAnother}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleReset();
+                        setAppMode(null);
+                      }}
+                      className="flex-1 py-3.5 px-4 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-center gap-2 cursor-pointer text-sm"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                      <span>{t.backToHome}</span>
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <>
@@ -979,11 +1076,46 @@ export default function App() {
                   
                   <button
                     onClick={handleDownloadPdf}
-                    className="w-full py-4 bg-blue-600 dark:bg-indigo-600 hover:bg-blue-700 dark:hover:bg-indigo-500 text-white font-bold rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-sm"
+                    className={`w-full py-4 font-bold rounded-2xl flex items-center justify-center gap-3 transition-all duration-200 active:scale-95 shadow-sm cursor-pointer ${
+                      downloaded
+                        ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20'
+                        : 'bg-blue-600 dark:bg-indigo-600 hover:bg-blue-700 dark:hover:bg-indigo-500 text-white'
+                    }`}
                   >
-                    <FileDown className="w-6 h-6" />
-                    {t.results.downloadPdf}
+                    {downloaded ? (
+                      <>
+                        <Check className="w-6 h-6 text-white animate-bounce" />
+                        <span>{t.results.downloadSuccess}</span>
+                      </>
+                    ) : (
+                      <>
+                        <FileDown className="w-6 h-6" />
+                        <span>{t.results.downloadPdf}</span>
+                      </>
+                    )}
                   </button>
+
+                  <div className="mt-4 pt-4 border-t border-slate-200/60 dark:border-slate-800 flex flex-col sm:flex-row gap-3">
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="flex-1 py-3.5 px-4 text-slate-700 dark:text-slate-200 font-semibold rounded-2xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 cursor-pointer text-sm"
+                    >
+                      <RotateCcw className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                      <span>{t.results.processAnother}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleReset();
+                        setAppMode(null);
+                      }}
+                      className="flex-1 py-3.5 px-4 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-center gap-2 cursor-pointer text-sm"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                      <span>{t.backToHome}</span>
+                    </button>
+                  </div>
                 </>
               )}
             </motion.div>
