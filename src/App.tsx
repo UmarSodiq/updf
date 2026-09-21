@@ -37,7 +37,8 @@ import {
   GripVertical,
   Sun,
   Moon,
-  ShieldCheck
+  ShieldCheck,
+  Download
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { saveAs } from 'file-saver';
@@ -78,6 +79,37 @@ export default function App() {
   };
 
   const t = translations[lang];
+
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isOnline, setIsOnline] = useState<boolean>(typeof navigator !== 'undefined' ? navigator.onLine : true);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+    };
+  }, []);
+
+  const handleInstallPwa = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+  };
 
   const [files, setFiles] = useState<File[]>([]);
   const [file, setFile] = useState<File | null>(null);
@@ -568,6 +600,18 @@ export default function App() {
               </AnimatePresence>
             </button>
 
+            {/* PWA Install Button */}
+            {deferredPrompt && (
+              <button
+                onClick={handleInstallPwa}
+                className="flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 px-3 py-1.5 rounded-full transition-all shadow-sm"
+                title={t.installApp}
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{t.installApp}</span>
+              </button>
+            )}
+
             {/* Start Over Button */}
             {appMode && (images.length > 0 || resultPdfBlob || batchResultsPdf.length > 0) && !isProcessing && (
               <button
@@ -581,6 +625,13 @@ export default function App() {
           </div>
         </div>
       </header>
+
+      {/* Offline Notice Banner */}
+      {!isOnline && (
+        <div className="bg-amber-500/95 backdrop-blur-md text-white text-xs sm:text-sm font-medium py-2 px-4 text-center sticky top-[57px] z-40 shadow-sm flex items-center justify-center gap-2">
+          <span>{t.offlineNotice}</span>
+        </div>
+      )}
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Welcome & Tool Selection Area */}
