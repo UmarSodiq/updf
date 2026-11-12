@@ -8,9 +8,9 @@ if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
 import { ConvertedImage, ProcessingState, ConversionOptions, CompressionOptions, SplitOptions, RotateOptions, RemovePagesOptions } from '@/types';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import * as pdfLib from 'pdf-lib';
-import { PDFDocument, PDFDict, PDFRef, PDFString, PDFHexString, PDFName, PDFArray, degrees, rgb, StandardFonts, PDFNumber } from 'pdf-lib';
-import { outlinePdfFactory } from '@lillallol/outline-pdf';
+
+import { PDFDocument, PDFDict, PDFRef, PDFString, PDFHexString, PDFName, PDFArray, degrees, PDFNumber } from 'pdf-lib';
+
 import { encryptPDF } from '@pdfsmaller/pdf-encrypt';
 import { decryptPDF } from '@pdfsmaller/pdf-decrypt';
 
@@ -143,7 +143,7 @@ function addOutlines(pdfDoc: PDFDocument, bookmarks: Bookmark[]) {
   pdfDoc.catalog.set(PDFName.of('Outlines'), outlinesDictRef);
 }
 
-const outlinePdf = outlinePdfFactory(pdfLib);
+
 
 export const parsePageRange = (rangeText: string, maxPages: number): Set<number> => {
   const pages = new Set<number>();

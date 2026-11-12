@@ -482,13 +482,6 @@ export default function App() {
 
   const toolSections = [
     {
-      category: t.categories.format,
-      items: [
-        { id: 'convert', name: t.tools.convert.name, icon: ImageIcon, desc: t.tools.convert.desc, iconColor: 'text-indigo-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)]' },
-        { id: 'img2pdf', name: t.tools.img2pdf.name, icon: FileImage, desc: t.tools.img2pdf.desc, iconColor: 'text-emerald-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]' },
-      ]
-    },
-    {
       category: t.categories.pages,
       items: [
         { id: 'merge', name: t.tools.merge.name, icon: CopyPlus, desc: t.tools.merge.desc, iconColor: 'text-blue-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' },
@@ -496,6 +489,13 @@ export default function App() {
         { id: 'rotate', name: t.tools.rotate.name, icon: RotateCw, desc: t.tools.rotate.desc, iconColor: 'text-rose-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(244,63,94,0.3)]' },
         { id: 'remove', name: t.tools.remove.name, icon: FileMinus, desc: t.tools.remove.desc, iconColor: 'text-red-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]' },
         { id: 'organize', name: t.tools.organize.name, icon: GripVertical, desc: t.tools.organize.desc, iconColor: 'text-teal-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(20,184,166,0.3)]' },
+      ]
+    },
+    {
+      category: t.categories.format,
+      items: [
+        { id: 'convert', name: t.tools.convert.name, icon: ImageIcon, desc: t.tools.convert.desc, iconColor: 'text-indigo-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)]' },
+        { id: 'img2pdf', name: t.tools.img2pdf.name, icon: FileImage, desc: t.tools.img2pdf.desc, iconColor: 'text-emerald-500', glowColor: 'group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]' },
       ]
     },
     {

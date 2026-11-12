@@ -12,7 +12,7 @@ export default defineConfig(() => {
       VitePWA({
         registerType: 'autoUpdate',
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,mjs,webmanifest}'],
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,mjs,webmanifest,woff2,woff,ttf}'],
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024 // 5 MB
         },
         manifest: {
@@ -40,9 +40,22 @@ export default defineConfig(() => {
         '@': path.resolve(__dirname, './src'),
       },
     },
+    build: {
+      chunkSizeWarningLimit: 600,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom', 'motion', 'lucide-react'],
+            'vendor-pdf-lib': ['pdf-lib', '@pdfsmaller/pdf-encrypt', '@pdfsmaller/pdf-decrypt'],
+            'vendor-pdfjs': ['pdfjs-dist', 'react-pdf'],
+            'vendor-zip': ['jszip', 'file-saver'],
+          },
+        },
+      },
+    },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+      // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
